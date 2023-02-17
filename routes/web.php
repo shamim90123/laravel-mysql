@@ -6,6 +6,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// store procedure
+
 Route::get('/get-procedure', function () {
     $user_id = 1;
 
