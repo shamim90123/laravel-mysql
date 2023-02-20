@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        \DB::statement($this->createView());
+        \DB::statement("CREATE VIEW view_books_author_data AS SELECT mst_author.id, mst_author.name, (SELECT count(*) FROM mst_books WHERE mst_books.author_id = mst_author.id ) AS total_books FROM mst_author");
     }
 
     /**
@@ -33,17 +33,14 @@ return new class extends Migration
      */
     private function createView(): string
     {
-        return SQL
-            CREATE VIEW view_author_data AS
+        return CREATE VIEW view_book_author_data AS
                 SELECT 
                     mst_author.id, 
                     mst_author.name, 
-                    mst_author.email,
                     (SELECT count(*) FROM mst_books
                                 WHERE mst_books.author_id = mst_author.id
-                            ) AS total_posts
-                FROM mst_author
-            SQL;
+                            ) AS total_books
+                FROM mst_author;
     }
 
     /**
@@ -53,7 +50,7 @@ return new class extends Migration
      */
     private function dropView(): string
     {
-        return SQL
+        return <<
 
             DROP VIEW IF EXISTS `view_author_data`;
             SQL;
