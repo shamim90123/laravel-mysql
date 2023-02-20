@@ -13,10 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('book_view', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        \DB::statement($this->createView());
     }
 
     /**
@@ -26,6 +23,39 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_view');
+        \DB::statement($this->dropView());
+    }
+
+        /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    private function createView(): string
+    {
+        return SQL
+            CREATE VIEW view_author_data AS
+                SELECT 
+                    mst_author.id, 
+                    mst_author.name, 
+                    mst_author.email,
+                    (SELECT count(*) FROM mst_books
+                                WHERE mst_books.author_id = mst_author.id
+                            ) AS total_posts
+                FROM mst_author
+            SQL;
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    private function dropView(): string
+    {
+        return SQL
+
+            DROP VIEW IF EXISTS `view_author_data`;
+            SQL;
     }
 };
