@@ -16,3 +16,7 @@ store commands and help to reduce code in controller.
 
 
 duplication of orignal table where one can put part of original table data and filter/work on duplicate tables which make faster api
+
+### Database Sharding
+
+# https://www.youtube.com/watch?v=hdxdhCpgYo8&list=PL9nWRykSBSFjU7UGR37SFfOb1oMYLNhag&ab_channel=BeABetterDev
